@@ -1,4 +1,4 @@
-# Initial page
+# Making Money
 
 ## Getting Super Powers
 
