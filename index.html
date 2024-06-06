@@ -1,89 +1,155 @@
-# Making Money
+
 
 ## Getting Super Powers
 
-```csharp
-/****************************************************************************************
-                           INTERACTIVE REGEX EVALUATOR
 
-	
-	           Run this query to experiment with Regular Expressions!
-	
-  You can also use the source code as a model for creating your own interactive queries.
-	
-*****************************************************************************************/
+```c#
+@"*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+//INTERACTIVE REGEX EVALUATOR
+
+  
+
+//Run this query to experiment with Regular Expressions!
+
+//You can also use the source code as a model for creating your own interactive queries.
+
+//c#
+\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\
+"
+  
 
 SelectBox[] helpBoxes;
+
 TextArea patternBox, inputBox, sourceCodeBox;
+
 CheckBox[] optionBoxes;
+
 DumpContainer results = new DumpContainer();
 
+  
+
 void Main()
+
 {
-	helpBoxes = GetHelpItems().Select (batch => new SelectBox (batch)).ToArray();
 
-	foreach (var helpBox in helpBoxes)
-	{
-		helpBox.Width = (3 + (float)helpBox.Options [0].ToString().Length / 2) + "em";
-		helpBox.SelectionChanged += (sender, args) =>
-		{
-			patternBox.Text += helpBox.SelectedOption.ToString().Split().First();
-			helpBox.SelectedIndex = 0;
-			Update();
-			patternBox.Focus();
-		};
-	}
+helpBoxes = GetHelpItems().Select (batch => new SelectBox (batch)).ToArray();
 
-	patternBox = new TextArea (Util.LoadString ("Last regex pattern") ?? "", 90, Update);
-	
-	var clearPattern = new Hyperlink ("Clear", c => { patternBox.Text = ""; Update(); }) 
-	{
-		TabIndex = -1 
-	};
+  
 
-	inputBox = new TextArea (Util.LoadString ("Last regex input") ?? "", 90, Update);
+foreach (var helpBox in helpBoxes)
 
-	string lastOptions = Util.LoadString ("Last regex options") ?? "";
-	
-	optionBoxes = Enum.GetValues (typeof (RegexOptions)).Cast<RegexOptions>()
-		.Skip (1)
-		.Select (o => new CheckBox (o.ToString(), onClick:Update) 
-		{
-			Tag = o,
-			Checked = lastOptions.Contains (o.ToString())
-		})
-		.ToArray();
+{
 
-	sourceCodeBox = new TextArea ("", 100) { Enabled = false };
+helpBox.Width = (3 + (float)helpBox.Options \[0\].ToString().Length / 2) + "em";
 
-	foreach (var control in helpBoxes.Cast<Control>().Append (inputBox).Append (patternBox))
-		control.Styles ["font-family"] = "consolas,monospace";
-		
-	inputBox.Styles ["font-size"] = patternBox.Styles ["font-size"] = "1.1em";
+helpBox.SelectionChanged += (sender, args) =>
 
-	Update();
+{
 
-	new WrapPanel (helpBoxes).Dump();
-	new WrapPanel (patternBox, clearPattern).Dump ("Pattern");
-	inputBox.Dump ("Input text");
-	new WrapPanel (optionBoxes).Dump();
-	results.Dump ("Matches");
-	sourceCodeBox.Dump();
-	new WrapPanel ("1em",
-		new Button ("Copy to clipboard", b => System.Windows.Forms.Clipboard.SetText (sourceCodeBox.Text)),
-		new Label ("Ctrl+Shift+C to clone query")).Dump();
-		
-	new Control ("small", "\r\nThis query uses LINQPad's HTML controls. Press Ctrl+R to see the source code.").Dump();
+patternBox.Text += helpBox.SelectedOption.ToString().Split().First();
 
-	patternBox.Focus();
-	patternBox.SelectAll();
+helpBox.SelectedIndex = 0;
+
+Update();
+
+patternBox.Focus();
+
+};
+
 }
 
-void Update (object sender = null)
+  
+
+patternBox = new TextArea (Util.LoadString ("Last regex pattern") ?? "", 90, Update);
+
+var clearPattern = new Hyperlink ("Clear", c => { patternBox.Text = ""; Update(); })
+
 {
-	RegexOptions checkedOptions = GetOptions();
-	
-	results.Content = Util.Try (() => GetResult (checkedOptions), ex => ex);
+
+TabIndex = -1
+
+};
+
+  
+
+inputBox = new TextArea (Util.LoadString ("Last regex input") ?? "", 90, Update);
+
+  
+
+string lastOptions = Util.LoadString ("Last regex options") ?? "";
+
+optionBoxes = Enum.GetValues (typeof (RegexOptions)).Cast<RegexOptions>()
+
+.Skip (1)
+
+.Select (o => new CheckBox (o.ToString(), onClick:Update)
+
+{
+
+Tag = o,
+
+Checked = lastOptions.Contains (o.ToString())
+
+})
+
+.ToArray();
+
+  
+
+sourceCodeBox = new TextArea ("", 100) { Enabled = false };
+
+  
+
+foreach (var control in helpBoxes.Cast<Control>().Append (inputBox).Append (patternBox))
+
+control.Styles \["font-family"\] = "consolas,monospace";
+
+inputBox.Styles \["font-size"\] = patternBox.Styles \["font-size"\] = "1.1em";
+
+  
+
+Update();
+
+  
+
+new WrapPanel (helpBoxes).Dump();
+
+new WrapPanel (patternBox, clearPattern).Dump ("Pattern");
+
+inputBox.Dump ("Input text");
+
+new WrapPanel (optionBoxes).Dump();
+
+results.Dump ("Matches");
+
+sourceCodeBox.Dump();
+
+new WrapPanel ("1em",
+
+new Button ("Copy to clipboard", b => System.Windows.Forms.Clipboard.SetText (sourceCodeBox.Text)),
+
+new Label ("Ctrl+Shift+C to clone query")).Dump();
+
+new Control ("small", "\\r\\nThis query uses LINQPad's HTML controls. Press Ctrl+R to see the source code.").Dump();
+
+  
+
+patternBox.Focus();
+
+patternBox.SelectAll();
+
+}
+
+  
+
+void Update (object sender = null)
+
+{
+
+RegexOptions checkedOptions = GetOptions();
+
+results.Content = Util.Try (() => GetResult (checkedOptions), ex => ex);
 	
 	string optionsExpr = string.Join ("\r\n\t| ", checkedOptions.ToString().Split (',').Select (o => "RegexOptions." + o.Trim()));
 	sourceCodeBox.Text = $@"Regex.Matches (input, @""{patternBox.Text.Replace ("\"", "\"\"")}""{PrefixUnlessEmpty (optionsExpr, ", ")})";
@@ -114,7 +180,7 @@ string PrefixUnlessEmpty (string expr, string prefix) => expr == "" ? "" : (pref
 
 string[][] GetHelpItems() => 
 @" Character sets
- 
+
 .      any char except line break (or any char in SingleLine mode)
 \d     a decimal digit
 \D   !(a decimal digit)
@@ -122,13 +188,13 @@ string[][] GetHelpItems() =>
 \W   !(a word character)
 \s     a whitespace char   -- same as [ \n\r\t\f\v] in English
 \S   !(a whitespace char)
- 
+
 [aeiou]     any char in set
 [^aeiou]  !(any char in set)
 [a-z]       any char in range
 [^a-z]    !(any char in range)
 [0-9a-z]    any char in multiple range
- 
+
 \p{L}   Letters
 \p{Lu}  Uppercase letters
 \p{Ll}  Lowercase letters
@@ -140,14 +206,16 @@ string[][] GetHelpItems() =>
 \p{C}   Control characters
 
 ~~ Quantifiers
- 
+
 ?      Zero or one matches     -- greedy
+
 *      Zero or more matches    -- greedy
+
 +      One or more matches     -- greedy
-{n}    Exactly n matches       -- greedy
-{n,}   At least n matches      -- greedy
-{n,m}  Between n and m matches -- greedy
- 
+       {n}    Exactly n matches       -- greedy
+       {n,}   At least n matches      -- greedy
+       {n,m}  Between n and m matches -- greedy
+
 *?     Zero or more matches    -- lazy
 +?     One or more matches     -- lazy
 {n}?   Exactly n matches       -- lazy
@@ -155,18 +223,18 @@ string[][] GetHelpItems() =>
 {n,m}? Between n and m matches -- lazy 
 
 ~~ Zero-width assertions 
- 
+
 ^   Start of string (or line in MultiLine mode)
 $   End of string   (or line in MultiLine mode)
 \A  Start of string (ignores MultiLine mode)
 \z  End of string   (ignores MultiLine mode)
 \Z  End of line or string
- 
+
 \b  On a word boundary
 \B  Not on a word boundary
- 
+
 \G  Where search started
- 
+
 (?=expr)  Continue matching if expr matches on right       (positive lookahead)
 (?!expr)  Continue matching if expr doesn’t match on right (negative lookahead)
 (?<=expr) Continue matching if expr matches on left        (positive lookbehind)
@@ -174,7 +242,7 @@ $   End of string   (or line in MultiLine mode)
 (?>expr)  Match expr once without backtracking
 
 ~~ Alternation
- 
+
 |                 Logical or
 foo|bar           Match foo OR bar
 (foo|bar)abc      Match foo OR bar, followed by abc
@@ -182,17 +250,17 @@ foo|bar           Match foo OR bar
 (?(name)foo|bar)  Match foo if named group matches, otherwise match bar  (bar is optional)
 
 ~~ Grouping
- 
+
 (expr)     Capture matched expression expr into indexed group
 (?number)  Capture matched substring into specified group number
 (?'name')  Capture matched substring into specified group name
 (?:expr)   Noncapturing group
- 
+
 \index     Reference a captured group by index
 \k<name>   Reference a captured group by name
 
 ~~ Escapes
- 
+
 \b     Backspace
 \t     Tab
 \r     Carriage return
@@ -205,34 +273,34 @@ foo|bar           Match foo OR bar
 \unnnn Unicode character nnnn as hex (e.g., \u07DE)
 
 ~~ Cookbook
- 
+
  --- Extract or count words---
 \b[\w-']+\b 
- 
+
  --- Extract name=value pairs (one per line) ---
 (?m)^\s*(?'name'\w+)\s*=\s*(?'value'.*)\s*(?=\r?$)
- 
+
  --- Match http(s) URI ---
 https?://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]
- 
+
  --- Match an email address (stackoverflow.com/questions/5342375) ---
 [\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*@((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))
- 
+
  --- Match a Guid ---
 ([0-9a-fA-F]{8}\-([0-9a-fA-F]{4}\-){3}[0-9a-fA-F]{12}\s){2}
- 
+
  --- Match hexadecimal number ---
 0[xX][0-9a-fA-F]+
- 
+
  --- Match .NET full assembly name ---
 [\w-]+,\sVersion=[\d\.]+,\sCulture=\w+,\sPublicKeyToken=[0-9a-f]{16}
- 
+
  --- Match unprintable control characters ---
 [\x00-\x08\x0B\x0C\x0E-\x1F]
- 
+
  --- Strong password check (at least 8 chars including digit/symbol) ---
 ^(?=.*(\d|\p{P}|\p{S})).{8,}
- 
+
  --- Parse F# compilation error/warning ---
 \((\d+)\s*,\s*(\d+)\)\s*:\s*(error|warning)\s+(.+?):\s+(.*)
 "
@@ -240,6 +308,7 @@ https?://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]
 	.Select (batch => batch.Split (new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
 	.ToArray();
 ```
+
 
 {% api-method method="get" host="" path="" %}
 {% api-method-summary %}
@@ -265,9 +334,7 @@ https?://[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]
 
 {% endapi-method-response-example-description %}
 
-```
 
-```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -281,9 +348,5 @@ Becoming a super hero is a fairly straight forward process:
 
 Once you're strong enough, save the world:
 
-```
-// Ain't no code for that yet, sorry
 echo 'You got to trust me on this, I saved the world'
-```
-
-
+moment([2007, 0, 29]).fromNow(); 
