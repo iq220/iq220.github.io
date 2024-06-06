@@ -1,9 +1,9 @@
 # Table of contents
 
-* [Making Money](iq220.github.io/README.md)
-* [Changes](iq220.github.iochanges.md)
-* [Untitled](iq220.github.io/untitled.md)
-* [Untitled](iq220.github.io/untitled-1.md)
+* [Making Money](README.md)
+* [Changes](changes.md)
+* [Untitled](untitled.md)
+* [Untitled](untitled-1.md)
 # Summary
 
 [Introduction](README.md)
