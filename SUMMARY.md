@@ -1,6 +1,7 @@
 # Table of contents
 
-* [Getting Super Powers](README.md)
+* [TheBanksMoney.com](README.md)
+* [Getting Super Powers](<README (1).md>)
 * [Changes](changes.md)
 * [Untitled](untitled-1.md)
 * [Untitled](untitled.md)
